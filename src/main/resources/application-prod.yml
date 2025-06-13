@@ -1,0 +1,12 @@
+app:
+  handle-all-exceptions: true
+  notification:
+    type: kafka
+  jwt:
+    expiration: 900000
+  avatars:
+    storage-path: ./avatars
+
+spring:
+  config:
+    import: optional:file:.env[.properties]

@@ -1,0 +1,12 @@
+app:
+  handle-all-exceptions: false
+  notification:
+    type: log
+  jwt:
+    expiration: 36000000
+  avatars:
+    storage-path: ./avatars
+
+spring:
+  config:
+    import: optional:file:dev.env[.properties]

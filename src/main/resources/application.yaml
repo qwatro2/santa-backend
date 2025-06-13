@@ -1,0 +1,32 @@
+app:
+  shuffle-max-attempts: 100
+  notification:
+    kafka:
+      topic: notifications
+      host: ${KAFKA_HOST}:${KAFKA_PORT}
+    reminders:
+      days: [7, 3, 1]
+  jwt:
+    secret: ${JWT_SECRET}
+  refresh:
+    expiration: 604800000  # 7day
+
+spring:
+  datasource:
+    url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate.ddl-auto: update
+  kafka:
+    bootstrap-servers: ${KAFKA_HOST}:${KAFKA_PORT}
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+
+springdoc:
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui
