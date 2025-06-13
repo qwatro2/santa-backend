@@ -1,14 +1,14 @@
 package santa.services;
 
+import santa.dtos.CreateGroupRequest;
 import santa.dtos.JoinLinkResponse;
 import santa.entities.SantaGroup;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
 public interface GroupService {
-    SantaGroup createGroup(String groupName, Instant exchangeDate, Long organizerId);
+    SantaGroup createGroup(CreateGroupRequest request, Long organizerId);
 
     void deleteGroup(UUID groupId, Long sourceUserId);
 

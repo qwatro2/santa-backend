@@ -44,11 +44,7 @@ public class GroupController {
     @PostMapping
     public ResponseEntity<GroupDto> createGroup(@RequestBody CreateGroupRequest request,
                                                 @AuthenticationPrincipal CustomUserDetails currentUser) {
-        SantaGroup group = groupService.createGroup(
-                request.name(),
-                request.exchangeDate(),
-                currentUser.getId()
-        );
+        SantaGroup group = groupService.createGroup(request, currentUser.getId());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(GroupDto.fromEntity(group));
     }

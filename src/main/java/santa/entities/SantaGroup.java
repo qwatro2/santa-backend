@@ -17,6 +17,8 @@ public class SantaGroup {
     private UUID id;
     private String name;
     private Instant exchangeDate;
+    private Integer costMin;
+    private Integer costMax;
     private boolean shuffled = false;
     private boolean done = false;
 

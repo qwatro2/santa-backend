@@ -2,9 +2,8 @@ package santa.services.impl;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
-import santa.SantaConfig;
+import santa.dtos.CreateGroupRequest;
 import santa.dtos.JoinLinkResponse;
 import santa.entities.Exclusion;
 import santa.entities.Participant;
@@ -17,7 +16,6 @@ import santa.repositories.ParticipantRepository;
 import santa.repositories.UserRepository;
 import santa.services.GroupService;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -32,13 +30,15 @@ public class GroupServiceImpl implements GroupService {
 
     @Transactional
     @Override
-    public SantaGroup createGroup(String groupName, Instant exchangeDate, Long organizerId) {
+    public SantaGroup createGroup(CreateGroupRequest request, Long organizerId) {
         User organizer = userRepository.findById(organizerId)
                 .orElseThrow(() -> new UserNotFoundException(organizerId));
 
         SantaGroup group = new SantaGroup();
-        group.setName(groupName);
-        group.setExchangeDate(exchangeDate);
+        group.setName(request.name());
+        group.setExchangeDate(request.exchangeDate());
+        group.setCostMin(request.costMin());
+        group.setCostMax(request.costMax());
         group.setOrganizer(organizer);
         group.setShuffled(false);
 
