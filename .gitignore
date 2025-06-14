@@ -38,4 +38,4 @@ build/
 .DS_Store
 
 vcs.xml
-santa_db.mv.db
+santa_db.*.db
