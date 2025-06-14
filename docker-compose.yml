@@ -7,8 +7,6 @@ services:
       - "${BACKEND_PORT}:${BACKEND_PORT}"
     depends_on:
       - db
-      - redis
-      - kafka
     volumes:
       - ./avatars:/app/avatars
 
