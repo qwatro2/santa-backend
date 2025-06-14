@@ -1,7 +1,7 @@
 app:
   handle-all-exceptions: true
   notification:
-    type: kafka
+    type: mail
   jwt:
     expiration: 900000
   avatars:
