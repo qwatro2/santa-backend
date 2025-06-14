@@ -10,7 +10,8 @@ public record SantaConfig(boolean handleAllExceptions,
                           SantaNotificationConfig notification,
                           SantaJwtConfig jwt,
                           SantaRefreshConfig refresh,
-                          SantaAvatarsConfig avatars) {
+                          SantaAvatarsConfig avatars,
+                          String confirmationTransport) {
     public record SantaNotificationConfig(String type, KafkaConfig kafka, SantaRemindersConfig reminders) {
         public record KafkaConfig(String topic, String host) {
         }

@@ -1,11 +1,12 @@
 app:
   handle-all-exceptions: false
   notification:
-    type: log
+    type: ${NOTIFICATION_TRANSPORT:log}
   jwt:
     expiration: 36000000
   avatars:
     storage-path: ./avatars
+  confirmation-transport: ${CONFIRMATION_TRANSPORT:log}
 
 spring:
   datasource:
