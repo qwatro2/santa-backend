@@ -29,7 +29,7 @@ public class MailConfirmationSenderServiceImpl implements ConfirmationSenderServ
     }
 
     private MailDto construct(User user, ConfirmationCode code) {
-        SantaConfig.SantaMailConfig mailConfig = santaConfig.mail();
+        SantaConfig.SantaMailConfig.SantaLetterConfig mailConfig = santaConfig.mail().confirm();
         return new MailDto(
                 user.getEmail(),
                 mailConfig.from(),

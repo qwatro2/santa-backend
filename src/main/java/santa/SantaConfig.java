@@ -36,8 +36,10 @@ public record SantaConfig(int randomSeed,
     public record SantaConfirmationConfig(int expiration, String transport, int length, String alphabet) {
     }
 
-    public record SantaMailConfig(String subject, TextPattern text, String from) {
-        public record TextPattern(String pattern, int numberOfVariables) {
+    public record SantaMailConfig(SantaLetterConfig confirm, SantaLetterConfig notification) {
+        public record SantaLetterConfig(String subject, TextPattern text, String from) {
+            public record TextPattern(String pattern, int numberOfVariables) {
+            }
         }
     }
 }

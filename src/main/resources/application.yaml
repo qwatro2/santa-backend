@@ -11,11 +11,18 @@ app:
   refresh:
     expiration: 604800000  # 7day
   mail:
-    subject: "Подтверждение регистрации"
-    text:
-      pattern: "Здравствуйте, {0}!\nВаш код для подтверждения регистрации: {1}"
-      number-of-variables: 2
-    from: "${MAIL_USERNAME}@yandex.ru"
+    confirm:
+      subject: "Подтверждение регистрации"
+      text:
+        pattern: "Здравствуйте, {0}!\nВаш код для подтверждения регистрации: {1}"
+        number-of-variables: 2
+      from: "${MAIL_USERNAME}@yandex.ru"
+    notification:
+      subject: "Напоминание о мероприятии"
+      text:
+        pattern: "Здравствуйте, {0}!\nНапоминаем, что {1} обмен подарками в группе {2}. {3}, чтобы купить подарок!"
+        number-of-variables: 4
+      from: "${MAIL_USERNAME}@yandex.ru"
 
 spring:
   jpa:
