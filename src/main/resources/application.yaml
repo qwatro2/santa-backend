@@ -1,4 +1,5 @@
 app:
+  random-seed: ${RANDOM_SECRET}
   shuffle-max-attempts: 100
   notification:
     reminders:

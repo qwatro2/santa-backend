@@ -6,7 +6,11 @@ app:
     expiration: 36000000
   avatars:
     storage-path: ./avatars
-  confirmation-transport: ${CONFIRMATION_TRANSPORT:log}
+  confirmation:
+    expiration: 36000000
+    transport: ${CONFIRMATION_TRANSPORT:log}
+    length: 5
+    alphabet: 0123456789
 
 spring:
   datasource:

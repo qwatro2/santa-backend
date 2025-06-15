@@ -16,6 +16,7 @@ public class User {
     private String passwordHash;
     private String displayName;
     private LocalDateTime createdAt = LocalDateTime.now();
+    private boolean isVerified = false;
 
     @OneToOne
     @JoinColumn(name = "avatar_id", referencedColumnName = "id")

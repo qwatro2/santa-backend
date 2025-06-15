@@ -38,6 +38,9 @@ build/
 .DS_Store
 
 vcs.xml
+dataSources.xml
+uiDesigner.xml
+
 santa_db.*.db
 .env
 dev.env

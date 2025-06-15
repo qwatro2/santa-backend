@@ -5,13 +5,14 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import java.util.List;
 
 @ConfigurationProperties(prefix = "app")
-public record SantaConfig(boolean handleAllExceptions,
+public record SantaConfig(int randomSeed,
+                          boolean handleAllExceptions,
                           int shuffleMaxAttempts,
                           SantaNotificationConfig notification,
                           SantaJwtConfig jwt,
                           SantaRefreshConfig refresh,
                           SantaAvatarsConfig avatars,
-                          String confirmationTransport) {
+                          SantaConfirmationConfig confirmation) {
     public record SantaNotificationConfig(String type, KafkaConfig kafka, SantaRemindersConfig reminders) {
         public record KafkaConfig(String topic, String host) {
         }
@@ -27,5 +28,8 @@ public record SantaConfig(boolean handleAllExceptions,
     }
 
     public record SantaAvatarsConfig(String storagePath) {
+    }
+
+    public record SantaConfirmationConfig(int expiration, String transport, int length, String alphabet) {
     }
 }

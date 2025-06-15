@@ -6,7 +6,11 @@ app:
     expiration: 900000
   avatars:
     storage-path: ./avatars
-  confirmation-transport: mail
+  confirmation:
+    expiration: 900000
+    transport: mail
+    length: 5
+    alphabet: 0123456789
 
 spring:
   datasource:

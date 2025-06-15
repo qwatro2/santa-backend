@@ -49,6 +49,12 @@ public class GlobalExceptionHandler {
                 .body(new ErrorResponse("AVATAR_SAVING_FAILED", ex.getMessage()));
     }
 
+    @ExceptionHandler(ConfirmationCodeNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleConfirmationCodeNotFound(ConfirmationCodeNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(new ErrorResponse("CONFIRMATION_CODE_NOT_FOUND", ex.getMessage()));
+    }
+
     @ExceptionHandler(DeleteGroupAccessDeniedException.class)
     public ResponseEntity<ErrorResponse> handleDeleteGroupAccessDenied(DeleteGroupAccessDeniedException ex) {
         return ResponseEntity.status(HttpStatus.FORBIDDEN)
@@ -133,6 +139,18 @@ public class GlobalExceptionHandler {
                 .body(new ErrorResponse("USER_NOT_FOUND", ex.getMessage()));
     }
 
+    @ExceptionHandler(UserNotVerifiedException.class)
+    public ResponseEntity<ErrorResponse> handleUserNotVerified(UserNotVerifiedException ex) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(new ErrorResponse("USER_NOT_VERIFIED", ex.getMessage()));
+    }
+
+    @ExceptionHandler(WrongConfirmationCodeException.class)
+    public ResponseEntity<ErrorResponse> handleWrongConfirmationCode(WrongConfirmationCodeException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorResponse("WRONG_CONFIRMATION_CODE", ex.getMessage()));
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleValidationExceptions(MethodArgumentNotValidException ex) {
         String message = ex.getBindingResult().getFieldErrors().stream()
@@ -144,7 +162,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(ExpiredJwtException.class)
-    public ResponseEntity<ErrorResponse> handleExpiredJwt(ExpiredJwtException ex) {
+    public ResponseEntity<ErrorResponse> handleExpiredJwt() {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body(new ErrorResponse("EXPIRED_JWT", "Jwt expired"));
     }
