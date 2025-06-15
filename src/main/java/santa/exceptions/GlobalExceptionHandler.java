@@ -176,6 +176,12 @@ public class GlobalExceptionHandler {
                 .body(new ErrorResponse("WRONG_CONFIRMATION_CODE", ex.getMessage()));
     }
 
+    @ExceptionHandler(WrongPasswordException.class)
+    public ResponseEntity<ErrorResponse> handleWrongPassword(WrongPasswordException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorResponse("WRONG_PASSWORD", ex.getMessage()));
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleValidationExceptions(MethodArgumentNotValidException ex) {
         String message = ex.getBindingResult().getFieldErrors().stream()
