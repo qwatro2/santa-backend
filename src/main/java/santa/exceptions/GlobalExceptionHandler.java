@@ -161,6 +161,12 @@ public class GlobalExceptionHandler {
                 .body(new ErrorResponse("VALIDATION_ERROR", message));
     }
 
+//    @ExceptionHandler(MailException.class)
+//    public ResponseEntity<ErrorResponse> handleMail() {
+//        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                .body(new ErrorResponse("MAIL_ERROR", "Error due sending email"));
+//    }
+
     @ExceptionHandler(ExpiredJwtException.class)
     public ResponseEntity<ErrorResponse> handleExpiredJwt() {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)

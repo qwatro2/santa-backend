@@ -12,11 +12,10 @@ public record SantaConfig(int randomSeed,
                           SantaJwtConfig jwt,
                           SantaRefreshConfig refresh,
                           SantaAvatarsConfig avatars,
-                          SantaConfirmationConfig confirmation) {
-    public record SantaNotificationConfig(String type, KafkaConfig kafka, SantaRemindersConfig reminders) {
-        public record KafkaConfig(String topic, String host) {
-        }
-
+                          SantaConfirmationConfig confirmation,
+                          SantaMailConfig mail
+) {
+    public record SantaNotificationConfig(String type, SantaRemindersConfig reminders) {
         public record SantaRemindersConfig(List<Integer> days) {
         }
     }
@@ -31,5 +30,10 @@ public record SantaConfig(int randomSeed,
     }
 
     public record SantaConfirmationConfig(int expiration, String transport, int length, String alphabet) {
+    }
+
+    public record SantaMailConfig(String subject, TextPattern text, String from) {
+        public record TextPattern(String pattern, int numberOfVariables) {
+        }
     }
 }

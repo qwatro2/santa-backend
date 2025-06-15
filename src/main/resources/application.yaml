@@ -8,6 +8,12 @@ app:
     secret: ${JWT_SECRET}
   refresh:
     expiration: 604800000  # 7day
+  mail:
+    subject: "Подтверждение регистрации"
+    text:
+      pattern: "Здравствуйте, {0}!\nВаш код для подтверждения регистрации: **{1}**"
+      number-of-variables: 2
+    from: "${MAIL_USERNAME}@yandex.ru"
 
 spring:
   jpa:
