@@ -4,7 +4,9 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import santa.dtos.CreateGroupRequest;
+import santa.dtos.ExclusionDto;
 import santa.dtos.JoinLinkResponse;
+import santa.dtos.ListExclusionDto;
 import santa.entities.Exclusion;
 import santa.entities.Participant;
 import santa.entities.SantaGroup;
@@ -126,6 +128,54 @@ public class GroupServiceImpl implements GroupService {
 
     @Transactional
     @Override
+    public void deleteExclusion(Long sourceUserId, UUID groupId, UUID exclusionId) {
+        SantaGroup group = groupRepository.findById(groupId)
+                .orElseThrow(() -> new GroupNotFoundException(groupId));
+
+        Exclusion exclusion = exclusionRepository.findById(exclusionId)
+                .orElseThrow(() -> new ExclusionNotFoundException(exclusionId));
+
+        if (!canGetOrDeleteExclusion(sourceUserId, group, exclusion)) {
+            throw new DeleteExclusionAccessDeniedException(exclusionId, groupId, sourceUserId);
+        }
+
+        exclusionRepository.delete(exclusion);
+    }
+
+    @Transactional
+    @Override
+    public ExclusionDto getExclusion(Long sourceUserId, UUID groupId, UUID exclusionId) {
+        SantaGroup group = groupRepository.findById(groupId)
+                .orElseThrow(() -> new GroupNotFoundException(groupId));
+
+        Exclusion exclusion = exclusionRepository.findById(exclusionId)
+                .orElseThrow(() -> new ExclusionNotFoundException(exclusionId));
+
+        if (!canGetOrDeleteExclusion(sourceUserId, group, exclusion)) {
+            throw new GetExclusionAccessDeniedException(exclusionId, groupId, sourceUserId);
+        }
+
+        return ExclusionDto.fromEntity(exclusion);
+    }
+
+    @Transactional
+    @Override
+    public ListExclusionDto getExclusions(Long sourceUserId, UUID groupId) {
+        SantaGroup group = groupRepository.findById(groupId)
+                .orElseThrow(() -> new GroupNotFoundException(groupId));
+        if (!Objects.equals(group.getOrganizer().getId(), sourceUserId)) {
+            throw new GetExclusionsAccessDeniedException(groupId, sourceUserId);
+        }
+
+        List<Exclusion> exclusions = group.getExclusions();
+        return new ListExclusionDto(
+                exclusions.size(),
+                exclusions.stream().map(ExclusionDto::fromEntity).toList()
+        );
+    }
+
+    @Transactional
+    @Override
     public JoinLinkResponse getJoinLink(UUID groupId, Long sourceUserId) {
         SantaGroup group = groupRepository.findById(groupId)
                 .orElseThrow(() -> new GroupNotFoundException(groupId));
@@ -184,5 +234,15 @@ public class GroupServiceImpl implements GroupService {
             return true;
         }
         return Objects.equals(giver.getUser().getId(), sourceUserId);
+    }
+
+    private boolean canGetOrDeleteExclusion(Long sourceUserId, SantaGroup group, Exclusion exclusion) {
+        if (exclusion.getGroup().getId() != group.getId()) {
+            return false;
+        }
+        if (Objects.equals(group.getOrganizer().getId(), sourceUserId)) {
+            return true;
+        }
+        return Objects.equals(exclusion.getGiver().getUser().getId(), sourceUserId);
     }
 }

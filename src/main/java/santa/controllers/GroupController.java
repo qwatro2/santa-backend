@@ -85,7 +85,8 @@ public class GroupController {
 
     @Operation(summary = "Add exclusion")
     @PostMapping("/{groupId}/exclusions")
-    public ResponseEntity<Void> addExclusion(@PathVariable("groupId") UUID groupId, @RequestBody AddExclusionRequest request,
+    public ResponseEntity<Void> addExclusion(@PathVariable("groupId") UUID groupId,
+                                             @RequestBody AddExclusionRequest request,
                                              @AuthenticationPrincipal CustomUserDetails currentUser) {
         groupService.addExclusion(
                 currentUser.getId(),
@@ -94,6 +95,43 @@ public class GroupController {
                 request.receiverId()
         );
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @Operation(summary = "Delete exclusion")
+    @DeleteMapping("/{groupId}/exclusions")
+    public ResponseEntity<Void> deleteExclusion(@PathVariable("groupId") UUID groupId,
+                                                @RequestBody DeleteExclusionRequest request,
+                                                @AuthenticationPrincipal CustomUserDetails currentUser) {
+        groupService.deleteExclusion(
+                currentUser.getId(),
+                groupId,
+                request.exclusionId()
+        );
+        return ResponseEntity.ok().build();
+    }
+
+    @Operation(summary = "Get exclusions")
+    @DeleteMapping("/{groupId}/exclusions")
+    public ResponseEntity<ListExclusionDto> getExclusions(@PathVariable("groupId") UUID groupId,
+                                                          @AuthenticationPrincipal CustomUserDetails currentUser) {
+        ListExclusionDto response = groupService.getExclusions(
+                currentUser.getId(),
+                groupId
+        );
+        return ResponseEntity.ok(response);
+    }
+
+    @Operation(summary = "Get exclusion by id")
+    @DeleteMapping("/{groupId}/exclusions/{exclusionId}")
+    public ResponseEntity<ExclusionDto> getExclusionById(@PathVariable("groupId") UUID groupId,
+                                                         @PathVariable("exclusionId") UUID exclusionId,
+                                                         @AuthenticationPrincipal CustomUserDetails currentUser) {
+        ExclusionDto response = groupService.getExclusion(
+                currentUser.getId(),
+                groupId,
+                exclusionId
+        );
+        return ResponseEntity.ok(response);
     }
 
     @Operation(summary = "Get join link")

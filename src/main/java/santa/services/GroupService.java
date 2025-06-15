@@ -1,7 +1,9 @@
 package santa.services;
 
 import santa.dtos.CreateGroupRequest;
+import santa.dtos.ExclusionDto;
 import santa.dtos.JoinLinkResponse;
+import santa.dtos.ListExclusionDto;
 import santa.entities.SantaGroup;
 
 import java.util.List;
@@ -17,6 +19,12 @@ public interface GroupService {
     void removeParticipant(UUID participantId, Long sourceUserId);
 
     void addExclusion(Long sourceUserId, UUID groupId, UUID giverId, UUID receiverId);
+
+    void deleteExclusion(Long sourceUserId, UUID groupId, UUID exclusionId);
+
+    ExclusionDto getExclusion(Long sourceUserId, UUID groupId, UUID exclusionId);
+
+    ListExclusionDto getExclusions(Long sourceUserId, UUID groupId);
 
     JoinLinkResponse getJoinLink(UUID groupId, Long sourceUserId);
 

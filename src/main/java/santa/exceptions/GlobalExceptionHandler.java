@@ -56,6 +56,12 @@ public class GlobalExceptionHandler {
                 .body(new ErrorResponse("CONFIRMATION_CODE_NOT_FOUND", ex.getMessage()));
     }
 
+    @ExceptionHandler(DeleteExclusionAccessDeniedException.class)
+    public ResponseEntity<ErrorResponse> handleDeleteExclusionAccessDenied(DeleteExclusionAccessDeniedException ex) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(new ErrorResponse("DELETE_EXCLUSION_ACCESS_DENIED", ex.getMessage()));
+    }
+
     @ExceptionHandler(DeleteGroupAccessDeniedException.class)
     public ResponseEntity<ErrorResponse> handleDeleteGroupAccessDenied(DeleteGroupAccessDeniedException ex) {
         return ResponseEntity.status(HttpStatus.FORBIDDEN)
@@ -72,6 +78,24 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleExclusionAlreadyExists(ExclusionAlreadyExistsException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ErrorResponse("EXCLUSION_ALREADY_EXISTS", ex.getMessage()));
+    }
+
+    @ExceptionHandler(ExclusionNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleExclusionNotFound(ExclusionNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(new ErrorResponse("EXCLUSION_NOT_FOUND", ex.getMessage()));
+    }
+
+    @ExceptionHandler(GetExclusionAccessDeniedException.class)
+    public ResponseEntity<ErrorResponse> handleGetExclusionAccessDenied(GetExclusionAccessDeniedException ex) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(new ErrorResponse("GET_EXCLUSION_ACCESS_DENIED", ex.getMessage()));
+    }
+
+    @ExceptionHandler(GetExclusionsAccessDeniedException.class)
+    public ResponseEntity<ErrorResponse> handleGetExclusionsAccessDenied(GetExclusionsAccessDeniedException ex) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(new ErrorResponse("GET_EXCLUSIONS_ACCESS_DENIED", ex.getMessage()));
     }
 
     @ExceptionHandler(GetGroupDetailsAccessDeniedException.class)
