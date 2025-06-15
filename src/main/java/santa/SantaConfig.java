@@ -15,8 +15,12 @@ public record SantaConfig(int randomSeed,
                           SantaConfirmationConfig confirmation,
                           SantaMailConfig mail
 ) {
-    public record SantaNotificationConfig(String type, SantaRemindersConfig reminders) {
+    public record SantaNotificationConfig(String type, SantaRemindersConfig reminders,
+                                          SantaScheduleConfig schedule) {
         public record SantaRemindersConfig(List<Integer> days) {
+        }
+
+        public record SantaScheduleConfig(String time) {
         }
     }
 

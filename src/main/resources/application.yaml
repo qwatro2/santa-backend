@@ -4,6 +4,8 @@ app:
   notification:
     reminders:
       days: [7, 3, 1]
+    schedule:
+      time: "10:00"
   jwt:
     secret: ${JWT_SECRET}
   refresh:
