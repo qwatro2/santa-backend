@@ -58,7 +58,7 @@ public class GroupController {
     }
 
     @Operation(summary = "Get group details")
-    @PostMapping("/{groupId}/details")
+    @GetMapping("/{groupId}/details")
     public ResponseEntity<GroupDetailsDto> getDetails(@PathVariable("groupId") UUID groupId,
                                                       @AuthenticationPrincipal CustomUserDetails currentUser) {
         GroupDetailsDto response = groupDetailsService.getDetails(groupId, currentUser.getId());
