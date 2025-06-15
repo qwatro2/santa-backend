@@ -111,7 +111,7 @@ public class GroupController {
     }
 
     @Operation(summary = "Get exclusions")
-    @DeleteMapping("/{groupId}/exclusions")
+    @GetMapping("/{groupId}/exclusions")
     public ResponseEntity<ListExclusionDto> getExclusions(@PathVariable("groupId") UUID groupId,
                                                           @AuthenticationPrincipal CustomUserDetails currentUser) {
         ListExclusionDto response = groupService.getExclusions(
@@ -122,7 +122,7 @@ public class GroupController {
     }
 
     @Operation(summary = "Get exclusion by id")
-    @DeleteMapping("/{groupId}/exclusions/{exclusionId}")
+    @GetMapping("/{groupId}/exclusions/{exclusionId}")
     public ResponseEntity<ExclusionDto> getExclusionById(@PathVariable("groupId") UUID groupId,
                                                          @PathVariable("exclusionId") UUID exclusionId,
                                                          @AuthenticationPrincipal CustomUserDetails currentUser) {
