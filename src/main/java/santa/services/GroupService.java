@@ -33,4 +33,6 @@ public interface GroupService {
     List<SantaGroup> getAllOrganizedByUser(Long userId);
 
     List<SantaGroup> getAllParticipatedByUser(Long userId);
+
+    UUID getParticipantId(UUID groupId, Long userId);
 }

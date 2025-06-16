@@ -149,4 +149,14 @@ public class GroupController {
         groupService.markDone(groupId, currentUser.getId());
         return ResponseEntity.ok().build();
     }
+
+    @Operation(summary = "Get my participantId in group")
+    @GetMapping("/{groupId}/participants/id")
+    public ResponseEntity<ParticipantIdResponse> getParticipantId(
+            @PathVariable("groupId") UUID groupId,
+            @AuthenticationPrincipal CustomUserDetails currentUser) {
+        UUID id = groupService.getParticipantId(groupId, currentUser.getId());
+        return ResponseEntity.ok(new ParticipantIdResponse(id));
+    }
+
 }
