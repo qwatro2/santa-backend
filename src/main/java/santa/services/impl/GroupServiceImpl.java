@@ -226,6 +226,21 @@ public class GroupServiceImpl implements GroupService {
         return groupRepository.findAllWherePartition(userId);
     }
 
+    @Transactional
+    @Override
+    public UUID getParticipantId(UUID groupId, Long userId) {
+        if (!userRepository.existsById(userId)) {
+            throw new UserNotFoundException(userId);
+        }
+
+        Participant participant = participantRepository
+                .findByGroup_IdAndUser_Id(groupId, userId)
+                .orElseThrow(() -> new ParticipantNotFoundException(groupId, userId));
+
+
+        return participant.getId();
+    }
+
     private boolean canAddExclusion(Long sourceUserId, SantaGroup group, Participant giver, Participant receiver) {
         if (giver.getId() == receiver.getId()) {
             return false;
@@ -244,19 +259,5 @@ public class GroupServiceImpl implements GroupService {
             return true;
         }
         return Objects.equals(exclusion.getGiver().getUser().getId(), sourceUserId);
-    }
-
-    @Override
-    @Transactional
-    public UUID getParticipantId(UUID groupId, Long userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException(userId));
-
-        Participant participant = participantRepository
-                .findByGroup_IdAndUser_Id(groupId, userId)
-                .orElseThrow(() -> new ParticipantNotFoundException(groupId)); // временно тк юзер айди int, а ошибка ждет uuid
-
-
-        return participant.getId();
     }
 }
