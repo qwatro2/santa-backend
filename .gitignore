@@ -44,3 +44,4 @@ uiDesigner.xml
 santa_db.*.db
 .env
 dev.env
+./avatars
