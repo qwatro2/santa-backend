@@ -40,7 +40,7 @@ public class AvatarController {
 
     @Operation(summary = "Get avatar of user by id")
     @GetMapping("/{userId}")
-    public ResponseEntity<Resource> getAvatarById(@PathVariable Long userId) {
+    public ResponseEntity<Resource> getAvatarById(@PathVariable("userId") Long userId) {
         AvatarDto dto = avatarService.getAvatarByUserId(userId);
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
