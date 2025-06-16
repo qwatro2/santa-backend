@@ -150,12 +150,14 @@ public class GroupController {
         return ResponseEntity.ok().build();
     }
 
-    @Operation(summary = "Get my participantId in group")
+    @Operation(summary = "Get participantId in group")
     @GetMapping("/{groupId}/participants/id")
     public ResponseEntity<ParticipantIdResponse> getParticipantId(
             @PathVariable("groupId") UUID groupId,
+            @RequestParam(name = "userId", required = false) Long userId,
             @AuthenticationPrincipal CustomUserDetails currentUser) {
-        UUID id = groupService.getParticipantId(groupId, currentUser.getId());
+        Long expectedId = userId == null ? currentUser.getId() : userId;
+        UUID id = groupService.getParticipantId(groupId, expectedId);
         return ResponseEntity.ok(new ParticipantIdResponse(id));
     }
 
